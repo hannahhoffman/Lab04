@@ -157,7 +157,7 @@ void CircularList<T>::remove(int index)
 
       if (sze == 1) //special case
       {
-		  delete loc;
+		 delete loc;
 
       }
       else
@@ -168,6 +168,15 @@ void CircularList<T>::remove(int index)
 		  DoubleNode<T>* next_node = cur->getNext();
 		  DoubleNode<T>* prev_node = cur->getPrev();
 
+		  loc = next_node;		
+
+
+		  next_node->setPrev(prev_node);
+
+		  
+		  prev_node->setNext(next_node);
+		  
+		delete cur;
       }
       sze--;
    } 
