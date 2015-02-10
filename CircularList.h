@@ -8,6 +8,7 @@
 #include "Circle.h"
 #include "Update.h"
 #include "Text.h"
+#include "Math.h"
 using CSC2110::String;
 
 template < class T >
@@ -63,28 +64,28 @@ DoubleNode<T>* CircularList<T>::find(int index)
  
    if (index >= loc_pos)
    {
-		   dist_prev = -(loc_pos + sze - index);                        //distance without the bridge (next refs, positive)
-		   dist_next = (index - loc_pos);                              //distance using the bridge (prev refs, negative)
+		   dist_prev = -(loc_pos + sze - index); //distance without the bridge (next refs, positive)
+		   dist_next = (index - loc_pos);//distance using the bridge (prev refs, negative)
    }
    else
    {
-             dist_prev = -(loc_pos - index);                       //distance without the bridge (prev refs, negative)
-		 	 dist_next = (sze - loc_pos) +index;				   	//distance using the bridge (next refs, positive)
+             dist_prev = -(loc_pos - index); //distance without the bridge (prev refs, negative)
+		 	 dist_next = (sze - loc_pos) + index; //distance using the bridge (next refs, positive)
    }
 
    //DO THIS which distance is smaller? 
 
-   dist_prev = abs(dis_prev);
-   dist_next = abs(dis_next);
+   dist_prev = abs(dist_prev);
+   dist_next = abs(dist_next);
 
-   if (dist_prev >= dis_next)
+   if (dist_prev >= dist_next)
    {
-	   min_dist = dis_next;
+	   min_dist = dist_next;
    }
 
    else 
    {
-	   min_dist = -(dis_prev);
+	   min_dist = -(dist_prev);
    }
 
 
@@ -156,21 +157,17 @@ void CircularList<T>::remove(int index)
 
       if (sze == 1) //special case
       {
-		  delete loc;		  		  
+		  delete loc;
 
       }
       else
       {
          //use local variables
 
-		  loc_pos = index;
-		  
-		  int next_node = index -> getNext();
+		  DoubleNode<T>* cur = find(index);
+		  DoubleNode<T>* next_node = cur->getNext();
+		  DoubleNode<T>* prev_node = cur->getPrev();
 
-		  int prev_node = index -> getPrev();
-
-		  loc -> setPrev(prev_node); // ??? prev_node -> setPrev()
-		  loc -> setNext(next_node); // ??? next_node -> setNext()
       }
       sze--;
    } 
