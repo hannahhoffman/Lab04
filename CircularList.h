@@ -63,19 +63,33 @@ DoubleNode<T>* CircularList<T>::find(int index)
  
    if (index >= loc_pos)
    {
-                                    //distance without the bridge (next refs, positive)
-                                    //distance using the bridge (prev refs, negative)
+		   dist_prev = -(loc_pos + sze - index);                        //distance without the bridge (next refs, positive)
+		   dist_next = (index - loc_pos);                              //distance using the bridge (prev refs, negative)
    }
    else
    {
-                                    //distance without the bridge (prev refs, negative)
-                                    //distance using the bridge (next refs, positive)
+             dist_prev = -(loc_pos - index);                       //distance without the bridge (prev refs, negative)
+		 	 dist_next = (sze - loc_pos) +index;				   	//distance using the bridge (next refs, positive)
    }
 
-   //DO THIS which distance is smaller?
+   //DO THIS which distance is smaller? 
+
+   dist_prev = abs(dis_prev);
+   dist_next = abs(dis_next);
+
+   if (dist_prev >= dis_next)
+   {
+	   min_dist = dis_next;
+   }
+
+   else 
+   {
+	   min_dist = -(dis_prev);
+   }
+
+
    //find the minimum distance using absolute value; abs()
    //set min_dist to the smaller value, keeping the sign
-
 
 
 
@@ -142,22 +156,21 @@ void CircularList<T>::remove(int index)
 
       if (sze == 1) //special case
       {
-
-
-
-
-
+		  delete loc;		  		  
 
       }
       else
       {
          //use local variables
 
+		  loc_pos = index;
+		  
+		  int next_node = index -> getNext();
 
+		  int prev_node = index -> getPrev();
 
-
-
-
+		  loc -> setPrev(prev_node); // ??? prev_node -> setPrev()
+		  loc -> setNext(next_node); // ??? next_node -> setNext()
       }
       sze--;
    } 
