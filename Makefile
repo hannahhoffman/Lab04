@@ -15,7 +15,7 @@ LIBS = -lCSC2110 -lgui -lgtkmm-3.0 -latkmm-1.6 -lgdkmm-3.0 -lgiomm-2.4 -lpangomm
 COMPILE = $(CC) $(INC_DIRS) -c
 LINK = $(CC) $(LIB_DIRS) -o
 
-all: Project
+all: Project 
 
 Project: 		$(FILES)
 			$(LINK) $(EXECUTABLE) $(FILES) $(LIBS)
