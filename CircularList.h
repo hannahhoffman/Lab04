@@ -64,28 +64,26 @@ DoubleNode<T>* CircularList<T>::find(int index)
  
    if (index >= loc_pos)
    {
-		   dist_prev = -(loc_pos + sze - index); //distance without the bridge (next refs, positive)
-		   dist_next = (index - loc_pos);//distance using the bridge (prev refs, negative)
+		   dist_next = (index - loc_pos); //distance without the bridge (next refs, positive)
+		   dist_prev = (loc_pos - index + sze);//distance using the bridge (prev refs, negative)
    }
    else
    {
-             dist_prev = -(loc_pos - index); //distance without the bridge (prev refs, negative)
-		 	 dist_next = (sze - loc_pos) + index; //distance using the bridge (next refs, positive)
+             dist_prev = (loc_pos - (index + sze)); //distance without the bridge (prev refs, negative)
+		 	 dist_next = loc_pos - index; //distance using the bridge (next refs, positive)
    }
 
    //DO THIS which distance is smaller? 
 
-   dist_prev = abs(dist_prev);
-   dist_next = abs(dist_next);
 
-   if (dist_prev >= dist_next)
+   if (abs(dist_prev) > abs(dist_next))
    {
 	   min_dist = dist_next;
    }
 
    else 
    {
-	   min_dist = -(dist_prev);
+	   min_dist = dist_prev;
    }
 
 
@@ -159,7 +157,6 @@ void CircularList<T>::remove(int index)
       {
 		 delete loc;
 		 loc = 0;
-		 sze = 0;
 		 loc_pos = 0;
 
       }
@@ -167,20 +164,37 @@ void CircularList<T>::remove(int index)
       {
          //use local variables
 
-		  DoubleNode<T>* cur = find(index);
-		  DoubleNode<T>* next_node = cur->getNext();
-		  DoubleNode<T>* prev_node = cur->getPrev();
+		  DoubleNode<T>* cur = find(index); // set cur equal to the node we want to delete
+		  DoubleNode<T>* next_node = cur->getNext(); // set next_node equal to the node in front of the one we will delete
+													// cur->getNext() has the same effect as using the find method again but faster
+		  DoubleNode<T>* prev_node = cur->getPrev(); // set prev_node equal to the node behind the one we will delete 
 
-		  loc = next_node;		
+		  loc = next_node; // set loc to the position of the next_node
 
 
-		  next_node->setPrev(prev_node);
+		  next_node->setPrev(prev_node); // make the previous node point to the next node 
 
 		  
-		  prev_node->setNext(next_node);
+		  prev_node->setNext(next_node); // make the next node point to the previous node
+
+		   if (index==sze)
+		  {
+			  loc_pos = 1;
+
+		  }
+
+		  else 
+		  {
+			  loc_pos = index;
+
+		  }
 		  
 		delete cur;
+
+	
+
       }
+
       sze--;
    } 
 }
