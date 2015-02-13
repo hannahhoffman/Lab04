@@ -1,3 +1,6 @@
+//https://github.com/hannahhoffman/Lab04
+
+
 #if !defined CIRCULARLIST_H
 #define CIRCULARLIST_H
 
@@ -65,12 +68,12 @@ DoubleNode<T>* CircularList<T>::find(int index)
    if (index >= loc_pos)
    {
 		   dist_next = (index - loc_pos); //distance without the bridge (next refs, positive)
-		   dist_prev = (loc_pos - index + sze);//distance using the bridge (prev refs, negative)
+		   dist_prev = -(loc_pos - index + sze);//distance using the bridge (prev refs, negative)
    }
    else
    {
-             dist_prev = (loc_pos - (index + sze)); //distance without the bridge (prev refs, negative)
-		 	 dist_next = loc_pos - index; //distance using the bridge (next refs, positive)
+             dist_prev = index - loc_pos; //distance without the bridge (prev refs, negative)
+		 	 dist_next = sze - loc_pos + index; //distance using the bridge (next refs, positive)
    }
 
    //DO THIS which distance is smaller? 
@@ -194,7 +197,6 @@ void CircularList<T>::remove(int index)
 	
 
       }
-
       sze--;
    } 
 }
